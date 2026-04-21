@@ -1,0 +1,47 @@
+[package]
+name = "turbo"
+version = "0.1.0"
+edition = { workspace = true }
+license = "MIT"
+
+[features]
+# By default, we enable rustls-tls for reqwest via downstream transitive features.
+# This is for the convenience of running daily dev workflows, i.e running
+# `cargo xxx` without explicitly specifying features.
+default = ["rustls-tls"]
+native-tls = ["turborepo-lib/native-tls"]
+rustls-tls = ["turborepo-lib/rustls-tls"]
+pprof = ["turborepo-lib/pprof"]
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[build-dependencies]
+build-target = "0.4.0"
+
+[dev-dependencies]
+assert_cmd = { workspace = true }
+camino = { workspace = true }
+dunce = { workspace = true }
+insta = { version = "1.40.0", features = ["json", "filters", "redactions"] }
+itertools = { workspace = true }
+nix = { workspace = true, features = ["signal"] }
+portable-pty = "0.9.0"
+pretty_assertions = { workspace = true }
+serde_json = { workspace = true }
+tempfile = { workspace = true }
+which = { workspace = true }
+
+[[bin]]
+name = "echo_args"
+path = "../../turborepo-tests/helpers/echo_args.rs"
+
+[lints]
+workspace = true
+
+[dependencies]
+anyhow = { workspace = true, features = ["backtrace"] }
+miette.workspace = true
+turborepo-lib = { workspace = true, default-features = false }
+turborepo-query = { workspace = true }
+turborepo-query-api = { workspace = true }
+turborepo-signals = { workspace = true }
+turborepo-ui = { workspace = true }
